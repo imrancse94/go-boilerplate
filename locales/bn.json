@@ -1,0 +1,3 @@
+{
+  "I have {{.amount}} Taka": "আমার কাছে {{.amount}} টাকা আছে"
+}

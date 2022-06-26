@@ -1,0 +1,9 @@
+{
+  "listen": "AAA-AAA-AAA {{.amount}} AAA ",
+  "Stay a while and listen {{.amount}}": "AAA-AAA-AAA {{.amount}} AAA ",
+  "success": "ppa",
+  "person": {
+    "one": "person",
+    "other": "people"
+  }
+}
