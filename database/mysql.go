@@ -10,7 +10,7 @@ import (
 
 var Db *gorm.DB
 
-func InitDb() *gorm.DB {
+func InitDB() *gorm.DB {
 	Db = ConnectDB()
 	return Db
 }

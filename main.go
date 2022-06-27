@@ -12,7 +12,7 @@ import (
 
 func main() {
 	godotenv.Load()
-	DB := database.InitDb()
+	DB := database.InitDB()
 	models.Init(DB)
 	bootstrap.Init()
 
