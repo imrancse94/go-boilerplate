@@ -49,7 +49,7 @@ func Trans(key string, vars string) string {
 		MessageID:    key, // source key identifier
 		TemplateData: x,
 	})
-	fmt.Println("dddd", x)
+	fmt.Println("dddd", simpleMessage)
 	return simpleMessage
 }
 

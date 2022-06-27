@@ -21,7 +21,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	localize.SetLocale("bn")
 	res := response.Response{
 		StatusCode: constant.Status("SUCCESS"),
-		Message:    localize.Trans("I have {{.amount}} Taka", ""),
+		Message:    localize.Trans("I have {{.amount}} Taka", `{"amount":"10"}`),
 		Data:       models.GetUserByEmail(request.Email),
 	}
 
