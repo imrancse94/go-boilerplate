@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"github.com/gorilla/mux"
 	"go-boilerplate/gate"
 	"go-boilerplate/middleware"
 	"go-boilerplate/requests"
@@ -11,12 +12,12 @@ import (
 func Init() {
 
 	Register := routes.Api()
-
+	r := mux.NewRouter()
 	for _, route := range Register.SingleRoutes {
 		if route.Middleware != nil {
-			http.HandleFunc(route.Path, Initialize(route.Handle, middleware.Method(route.Method), route.Middleware, requests.Validation(route.Validation)))
+			r.HandleFunc(route.Path, Initialize(route.Handle, middleware.Method(route.Method), route.Middleware, requests.Validation(route.Validation)))
 		} else {
-			http.HandleFunc(route.Path, Initialize(route.Handle, middleware.Method(route.Method), nil, requests.Validation(route.Validation)))
+			r.HandleFunc(route.Path, Initialize(route.Handle, middleware.Method(route.Method), nil, requests.Validation(route.Validation)))
 		}
 	}
 
@@ -27,12 +28,14 @@ func Init() {
 				if route.Middleware != nil {
 					currentMiddleware = append(currentMiddleware, route.Middleware...)
 				}
-				http.HandleFunc(route.PreFix+child.Path, Initialize(child.Handle, middleware.Method(child.Method), currentMiddleware, requests.Validation(child.Validation)))
+				r.HandleFunc(route.PreFix+child.Path, Initialize(child.Handle, middleware.Method(child.Method), currentMiddleware, requests.Validation(child.Validation)))
 			} else {
-				http.HandleFunc(route.PreFix+child.Path, Initialize(child.Handle, middleware.Method(child.Method), nil, requests.Validation(child.Validation)))
+				r.HandleFunc(route.PreFix+child.Path, Initialize(child.Handle, middleware.Method(child.Method), nil, requests.Validation(child.Validation)))
 			}
 		}
 	}
+
+	http.Handle("/", r)
 
 }
 

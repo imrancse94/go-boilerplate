@@ -12,7 +12,8 @@ import (
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
-
+	/*req := mux.Vars(r)
+	fmt.Println("Test Mux", req["id"], req["name"])*/
 	request := requests.LoginRequest{}
 	Helper.Request(r, &request)
 
