@@ -23,10 +23,10 @@ func ConnectDB() *gorm.DB {
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
-	fmt.Println("Test Log", db.Logger)
+	//fmt.Println("Test Log", db.Logger)
 
 	if err != nil {
-		fmt.Println("Error connecting to database : error=%v", err)
+		fmt.Printf("Error connecting to database : error=%v\n", err)
 		return nil
 	}
 

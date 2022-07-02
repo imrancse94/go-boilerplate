@@ -6,6 +6,7 @@ import (
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"go-boilerplate/cache"
 	"golang.org/x/text/language"
+	"strings"
 )
 
 func SetLocale(lang string) {
@@ -45,11 +46,37 @@ func Trans(key string, vars string) string {
 	var x map[string]interface{}
 
 	json.Unmarshal([]byte(vars), &x)
+	for k, v := range x {
+		var str = strings.Split(v.(string), "")
+		var finalString = ""
+		for _, value := range str {
+			currentString, _ := localize.Localize(&i18n.LocalizeConfig{
+				MessageID: value,
+			})
+
+			if currentString == "" {
+				currentString = value
+			}
+			finalString += currentString
+		}
+
+		x[k] = finalString
+	}
 	simpleMessage, _ := localize.Localize(&i18n.LocalizeConfig{
 		MessageID:    key, // source key identifier
 		TemplateData: x,
 	})
-	fmt.Println("dddd", simpleMessage)
+
+	if simpleMessage == "" {
+		simpleMessage = key
+		if x != nil {
+			for k, v := range x {
+				simpleMessage = strings.Replace(simpleMessage, fmt.Sprintf("{{.%s}}", k), v.(string), -1)
+			}
+		}
+
+		fmt.Println("x", x)
+	}
 	return simpleMessage
 }
 

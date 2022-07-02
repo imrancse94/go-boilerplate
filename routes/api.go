@@ -26,19 +26,18 @@ func Api() Register {
 		GroupRoutes: []GroupRoute{
 			{
 				Name:   "User",
-				PreFix: "/auth",
+				PreFix: "/user",
 				Middleware: []gate.Middleware{
 					middleware.Global(),
 				},
 				Children: []SingleRoute{
 					{
-						Name:       "user",
-						Method:     "POST",
-						Path:       "/user",
-						Validation: &requests.LoginRequest{},
-						Handle:     controllers.User,
+						Name:   "user",
+						Method: "GET",
+						Path:   "/auth-data",
+						Handle: controllers.AuthData,
 						Middleware: []gate.Middleware{
-							middleware.Logging(),
+							middleware.Auth(),
 						},
 					},
 				},

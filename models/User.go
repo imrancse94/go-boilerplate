@@ -1,6 +1,7 @@
 package models
 
 type User struct {
+	ID        uint   `json:"id" gorm:"primary_key"`
 	Name      string `gorm:"type:varchar(100);not null" json:"name"`
 	Email     string `gorm:"type:varchar(100);not null;unique" json:"email"`
 	Password  string `gorm:"type:varchar(100);not null" json:"-"` // hidden field

@@ -8,35 +8,37 @@ import (
 	"time"
 )
 
-func connectRedis(ctx context.Context) (*redis.Client, error) {
-	client := redis.NewClient(&redis.Options{
+var RClient *redis.Client
+
+func ConnectRedis(ctx context.Context) (*redis.Client, error) {
+	RClient = redis.NewClient(&redis.Options{
 		Addr:     os.Getenv("REDIS_HOST") + ":" + os.Getenv("REDIS_PORT"),
 		Password: os.Getenv("REDIS_PASSWORD"),
 		DB:       0,
 	})
 
-	pong, err := client.Ping(ctx).Result()
+	pong, err := RClient.Ping(ctx).Result()
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Println(pong)
-	return client, err
+
+	return RClient, err
 }
 
 // Set lifetime = 0 means forever
 func Set(key, val string, lifetime int) {
 	var ctx = context.Background()
-	redisClient, err := connectRedis(ctx)
+	redisClient := RClient
 	expire := time.Duration(lifetime) * time.Minute
 	redisClient.Set(ctx, key, val, expire).Err()
-	if err != nil {
-		fmt.Println(err)
-	}
+
 }
 
 func Get(key string) string {
 	var ctx = context.Background()
-	redisClient, err := connectRedis(ctx)
+	redisClient := RClient
 	val, err := redisClient.Get(ctx, key).Result()
 	if err != nil {
 		fmt.Println(err)
