@@ -17,8 +17,14 @@ func Api() Register {
 				Path:       "/login",
 				Validation: &requests.LoginRequest{},
 				Handle:     controllers.Login,
+			},
+			{
+				Name:   "RefreshToken",
+				Method: "POST",
+				Path:   "/refresh-token",
+				Handle: controllers.RefreshToken,
 				Middleware: []gate.Middleware{
-					//middleware.Logging(),
+					middleware.ValidateRefreshToken(),
 				},
 			},
 		},
@@ -28,17 +34,15 @@ func Api() Register {
 				Name:   "User",
 				PreFix: "/user",
 				Middleware: []gate.Middleware{
-					middleware.Global(),
+					middleware.Auth(),
 				},
 				Children: []SingleRoute{
 					{
-						Name:   "user",
-						Method: "GET",
-						Path:   "/auth-data",
-						Handle: controllers.AuthData,
-						Middleware: []gate.Middleware{
-							middleware.Auth(),
-						},
+						Name:       "user",
+						Method:     "GET",
+						Path:       "/auth-data",
+						Handle:     controllers.AuthData,
+						Middleware: []gate.Middleware{},
 					},
 				},
 			},

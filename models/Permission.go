@@ -1,19 +1,15 @@
 package models
 
-import (
-	"fmt"
-)
-
 type RolePage struct {
 	ID                int    `gorm:"primary_key" json:"id"`
 	UserID            int    `gorm:"type:int(11);not null" json:"user_id"`
 	PermissionVersion int    `gorm:"type:int(11);not null" json:"permission_version"`
 	PageID            int    `gorm:"type:int(11);not null" json:"page_id"`
-	PageName          string `gorm:"type:varchar(100);not null" json:"page_name"`
+	PageName          string `gorm:"type:varchar;not null" json:"page_name"`
 	ParentID          int    `gorm:"type:int(11);not null" json:"parent_id"`
 	IsIndex           int    `gorm:"type:int(11);not null" json:"is_index"`
-	Icon              string `gorm:"type:varchar(100);not null" json:"icon"`
-	PermissionName    string `gorm:"type:varchar(100);not null" json:"permission_name"`
+	Icon              string `gorm:"type:varchar;not null" json:"icon"`
+	PermissionName    string `gorm:"type:varchar;not null" json:"permission_name"`
 	Submenu           map[int]interface{}
 }
 
@@ -42,6 +38,7 @@ func GetRolePageByUserId(id int) Permission {
                         WHERE users.id = ?`
 
 	err := DB.Raw(sql, id).Scan(&rolePage).Error
+
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +73,7 @@ func makeSideBar(elements []RolePage, parentId int, indexList map[int]interface{
 			children := makeSideBar(elements, elements[elementIndex].ID, indexList)
 
 			if elements[elementIndex].ID > 0 && indexList[elements[elementIndex].ID] != nil {
-				fmt.Println("D1", indexList[elements[elementIndex].ID].(RolePage).PermissionName, elements[elementIndex].ID)
+				//fmt.Println("D1", indexList[elements[elementIndex].ID].(RolePage).PermissionName, elements[elementIndex].ID)
 				elements[elementIndex].PermissionName = indexList[elements[elementIndex].ID].(RolePage).PermissionName
 				elements[elementIndex].IsIndex = 1
 

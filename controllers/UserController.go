@@ -47,6 +47,16 @@ func AuthData(w http.ResponseWriter, r *http.Request) {
 	response.SuccessRespond(res, w)
 }
 
-func User(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1>User</h1>"))
+func RefreshToken(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.Header.Get("auth_id"))
+	user := models.GetUserById(id)
+
+	data, _ := Services.CreateTokenDataByUser(user)
+
+	res := response.Response{
+		StatusCode: constant.Status("SUCCESS"),
+		Message:    localize.Trans("Token Refreshed successfully", ""),
+		Data:       data,
+	}
+	response.SuccessRespond(res, w)
 }

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"go-boilerplate/models"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"os"
 	"strconv"
@@ -75,11 +76,11 @@ func (Jwt) ValidateToken(accessToken string) (AuthUser, error) {
 	return user, errors.New("invalid token")
 }
 
-func (Jwt) ValidateRefreshToken(model models.Token) (models.User, error) {
+func (Jwt) ValidateRefreshToken(model models.Token) (AuthUser, error) {
 	sha1 := sha1.New()
 	io.WriteString(sha1, os.Getenv("JWT_SECRET_KEY"))
 
-	user := models.User{}
+	user := AuthUser{}
 	salt := string(sha1.Sum(nil))[0:16]
 	block, err := aes.NewCipher([]byte(salt))
 	if err != nil {
@@ -121,7 +122,9 @@ func (Jwt) ValidateRefreshToken(model models.Token) (models.User, error) {
 		return user, errors.New("invalid token")
 	}
 
-	user.ID = uint(payload["user_id"].(float64))
+	//fmt.Println("payload", payload)
+
+	user.ID = int(payload["user_id"].(float64))
 
 	return user, nil
 }
@@ -152,4 +155,14 @@ func (Jwt) createRefreshToken(token models.Token) (models.Token, error) {
 	token.RefreshToken = base64.URLEncoding.EncodeToString(gcm.Seal(nonce, nonce, []byte(token.AccessToken), nil))
 
 	return token, nil
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
