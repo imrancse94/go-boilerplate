@@ -11,7 +11,7 @@ func Login(input requests.LoginRequest) (data interface{}, error string) {
 	user := models.GetUserByEmail(input.Email)
 
 	if !CheckPasswordHash(input.Password, user.Password) {
-		return user, "Invalid email or password"
+		return "", "Invalid email or password"
 	}
 
 	return CreateTokenDataByUser(user)

@@ -19,6 +19,18 @@ func Api() Register {
 				Handle:     controllers.Login,
 			},
 			{
+				Name:   "Test",
+				Method: "GET",
+				Path:   "/test",
+				Handle: controllers.Test,
+			},
+			{
+				Name:   "Test",
+				Method: "POST",
+				Path:   "/ed",
+				Handle: controllers.TestEncryptDecrypt,
+			},
+			{
 				Name:   "RefreshToken",
 				Method: "POST",
 				Path:   "/refresh-token",
@@ -42,6 +54,13 @@ func Api() Register {
 						Method:     "GET",
 						Path:       "/auth-data",
 						Handle:     controllers.AuthData,
+						Middleware: []gate.Middleware{},
+					},
+					{
+						Name:       "roles",
+						Method:     "GET",
+						Path:       "/roles",
+						Handle:     controllers.GetRoles,
 						Middleware: []gate.Middleware{},
 					},
 				},

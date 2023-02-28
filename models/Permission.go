@@ -73,13 +73,11 @@ func makeSideBar(elements []RolePage, parentId int, indexList map[int]interface{
 			children := makeSideBar(elements, elements[elementIndex].ID, indexList)
 
 			if elements[elementIndex].ID > 0 && indexList[elements[elementIndex].ID] != nil {
-				//fmt.Println("D1", indexList[elements[elementIndex].ID].(RolePage).PermissionName, elements[elementIndex].ID)
 				elements[elementIndex].PermissionName = indexList[elements[elementIndex].ID].(RolePage).PermissionName
 				elements[elementIndex].IsIndex = 1
-
 			}
 
-			if len(children) > 0 {
+			if children != nil {
 				elements[elementIndex].Submenu = make(map[int]interface{})
 				elements[elementIndex].Submenu = children
 			}

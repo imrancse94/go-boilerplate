@@ -42,7 +42,7 @@ func (j Jwt) CreateToken(user models.User) (models.Token, error) {
 		return jwtToken, err
 	}
 	id := int(user.ID)
-	permissionData := models.GetRolePageByUserId(id)
+	permissionData := GetPermissionByUserId(id)
 	jwtToken.User = user
 	jwtToken.Permissions = permissionData
 	jwtToken.Expire = expire * 60

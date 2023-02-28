@@ -13,7 +13,7 @@ func GetUserByEmail(email string) User {
 	var user User
 	err := DB.Where("email = ?", email).First(&user).Error
 	if err != nil {
-		panic(err)
+
 	}
 	return user
 }

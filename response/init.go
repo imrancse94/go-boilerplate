@@ -11,10 +11,16 @@ type Response struct {
 	Data       interface{} `json:"data"`
 }
 
+func SetupResponse(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
 func SuccessRespond(fields Response, writer http.ResponseWriter) {
 	if fields.Data == "" {
 		fields.Data = []string{}
 	}
+
 	message, err := json.MarshalIndent(fields, "", " ")
 
 	if err != nil {
@@ -26,6 +32,9 @@ func SuccessRespond(fields Response, writer http.ResponseWriter) {
 
 	//Send header, status code and output to writer
 	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS")
+	writer.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	writer.WriteHeader(http.StatusOK)
 	writer.Write(message)
 }
