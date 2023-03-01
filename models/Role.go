@@ -15,3 +15,12 @@ func GetRoles() []Role {
 	}
 	return roles
 }
+
+func AddRole(role Role) interface{} {
+	err := DB.Create(&role)
+
+	if err != nil {
+		return nil
+	}
+	return role
+}

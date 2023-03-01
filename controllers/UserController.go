@@ -49,7 +49,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 func AuthData(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.Header.Get("auth_id"))
 	user := models.GetUserById(id)
-	//fmt.Println("Token", Helper.ExtractToken(r.Header.Get("Authorization")))
+	//fmt.Println("Token", id)
 	var data = map[string]interface{}{
 		"access_token": Helper.ExtractToken(r.Header.Get("Authorization")),
 		"user":         user,

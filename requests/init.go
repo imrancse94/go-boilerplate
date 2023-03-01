@@ -1,10 +1,12 @@
 package requests
 
+//https://pkg.go.dev/github.com/asaskevich/govalidator
 import (
 	"bytes"
 	"encoding/json"
 	"errors"
 	"github.com/asaskevich/govalidator"
+	"go-boilerplate/constant"
 	"go-boilerplate/gate"
 	"go-boilerplate/response"
 	"io"
@@ -66,7 +68,7 @@ func Validation(data interface{}) gate.Middleware {
 				//http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 				//fmt.Fprint(w, err.(error).Error())
 				response.ErrorResponse(response.ErrorResponseStruct{
-					StatusCode: "E001",
+					StatusCode: constant.Status("VALIDATION_ERROR"),
 					Message:    "Validation Error",
 					Error:      err,
 				}, w)

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"go-boilerplate/constant"
 	"go-boilerplate/gate"
 	"go-boilerplate/response"
 	"net/http"
@@ -20,8 +21,18 @@ func Method(m string) gate.Middleware {
 			// Do middleware things
 			if r.Method != m {
 				response.ErrorResponse(response.ErrorResponseStruct{
-					StatusCode: "E001",
+					StatusCode: constant.Status("METHOD_NOT_ALLOWED"),
 					Message:    "Method not allowed",
+					Error:      "",
+				}, w)
+				return
+			}
+			contentType := r.Header.Get("Content-Type")
+
+			if contentType != "application/json" {
+				response.ErrorResponse(response.ErrorResponseStruct{
+					StatusCode: constant.Status("UNSUPPORTED_MEDIA_TYPE"),
+					Message:    "Unsupported Media Type",
 					Error:      "",
 				}, w)
 				return

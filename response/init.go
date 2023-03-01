@@ -41,6 +41,8 @@ func SuccessRespond(fields Response, writer http.ResponseWriter) {
 
 func ErrorResponse(fields ErrorResponseStruct, writer http.ResponseWriter) {
 	//Create a new map and fill it
+	statusCode := http.StatusOK
+
 	if fields.Error == "" {
 		fields.Error = []string{}
 	}
@@ -54,7 +56,7 @@ func ErrorResponse(fields ErrorResponseStruct, writer http.ResponseWriter) {
 
 	//Send header, status code and output to writer
 	writer.Header().Set("Content-Type", "application/json")
-	writer.WriteHeader(http.StatusOK)
+	writer.WriteHeader(statusCode)
 	writer.Write(data)
 	return
 }

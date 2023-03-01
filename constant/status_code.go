@@ -11,6 +11,8 @@ func Status(key string) string {
 	status["FORBIDDEN"] = "403"
 	status["INTERNAL_SERVER_ERROR"] = "500"
 	status["VALIDATION_ERROR"] = "422"
+	status["METHOD_NOT_ALLOWED"] = "421"
+	status["UNSUPPORTED_MEDIA_TYPE"] = "421"
 
 	return status[key]
 }
