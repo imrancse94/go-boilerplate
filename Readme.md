@@ -1,4 +1,4 @@
-## Golang microservice quick start
+## Golang quick start
 
 1. Route Based structure
 2. Request validation

@@ -11,11 +11,17 @@ import (
 var Db *gorm.DB
 
 func InitDB() *gorm.DB {
-	Db = ConnectDB()
+	DbConnection := os.Getenv("DB_CONNECTION")
+
+	if DbConnection == "mysql" {
+		Db = ConnectMySQLDB()
+	}
+
 	return Db
+
 }
 
-func ConnectDB() *gorm.DB {
+func ConnectMySQLDB() *gorm.DB {
 	var err error
 	dsn := os.Getenv("MYSQL_USER") + ":" + os.Getenv("MYSQL_PASSWORD") + "@tcp" + "(" + os.Getenv("MYSQL_HOST") + ":" + os.Getenv("MYSQL_PORT") + ")/" + os.Getenv("MYSQL_DATABASE") + "?" + "parseTime=true&loc=Local"
 
