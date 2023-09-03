@@ -1,21 +1,25 @@
 package models
 
+type Menu struct {
+	Submenu []RolePage
+}
+
 type RolePage struct {
-	ID                int    `gorm:"primary_key" json:"id"`
-	UserID            int    `gorm:"type:int(11);not null" json:"user_id"`
-	PermissionVersion int    `gorm:"type:int(11);not null" json:"permission_version"`
-	PageID            int    `gorm:"type:int(11);not null" json:"page_id"`
-	PageName          string `gorm:"type:varchar;not null" json:"page_name"`
-	ParentID          int    `gorm:"type:int(11);not null" json:"parent_id"`
-	IsIndex           int    `gorm:"type:int(11);not null" json:"is_index"`
-	Icon              string `gorm:"type:varchar;not null" json:"icon"`
-	PermissionName    string `gorm:"type:varchar;not null" json:"permission_name"`
-	Submenu           map[int]interface{}
+	ID                int        `gorm:"primary_key" json:"id"`
+	UserID            int        `gorm:"type:int(11);not null" json:"user_id"`
+	PermissionVersion int        `gorm:"type:int(11);not null" json:"permission_version"`
+	PageID            int        `gorm:"type:int(11);not null" json:"page_id"`
+	PageName          string     `gorm:"type:varchar;not null" json:"page_name"`
+	ParentID          int        `gorm:"type:int(11);not null" json:"parent_id"`
+	IsIndex           int        `gorm:"type:int(11);not null" json:"is_index"`
+	Icon              string     `gorm:"type:varchar;not null" json:"icon"`
+	PermissionName    string     `gorm:"type:varchar;not null" json:"permission_name"`
+	Submenu           []RolePage `gorm:"-"`
 }
 
 type Permission struct {
-	PermissionList  []string            `json:"permission_list"`
-	PermissionAssoc map[int]interface{} `json:"permission_assoc"`
+	PermissionList  []string   `json:"permission_list"`
+	PermissionAssoc []RolePage `json:"permission_assoc"`
 }
 
 func GetRolePageByUserId(id int) Permission {
@@ -59,8 +63,8 @@ func GetRolePageByUserId(id int) Permission {
 	return Permission
 }
 
-func makeSideBar(elements []RolePage, parentId int, indexList map[int]interface{}) map[int]interface{} {
-	var branch = make(map[int]interface{})
+func makeSideBar(elements []RolePage, parentId int, indexList map[int]interface{}) []RolePage {
+	var branch []RolePage
 	//fmt.Println("elements", branch)
 	for elementIndex := range elements {
 		// array key not exist do not proceed
@@ -78,11 +82,12 @@ func makeSideBar(elements []RolePage, parentId int, indexList map[int]interface{
 			}
 
 			if children != nil {
-				elements[elementIndex].Submenu = make(map[int]interface{})
+				//elements[elementIndex].Submenu = make(map[int]interface{})
 				elements[elementIndex].Submenu = children
 			}
 
-			branch[elements[elementIndex].ID] = elements[elementIndex]
+			//branch[elements[elementIndex].ID] = elements[elementIndex]
+			branch = append(branch, elements[elementIndex])
 			elements = RemoveIndex(elements, elementIndex)
 		}
 	}
