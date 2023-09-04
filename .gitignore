@@ -1,4 +1,4 @@
 .env
 /logs/
 /docker/
-/tmp/*
+/cmd/tmp/*

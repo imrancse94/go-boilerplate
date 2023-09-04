@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"go-boilerplate/constant"
-	"go-boilerplate/gate"
-	"go-boilerplate/response"
+	"go-boilerplate/pkg/gate"
+	"go-boilerplate/pkg/response"
 	Services "go-boilerplate/services"
 	"net/http"
 	"strconv"

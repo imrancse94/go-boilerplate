@@ -12,7 +12,7 @@ var Db *gorm.DB
 
 func InitDB() *gorm.DB {
 	DbConnection := os.Getenv("DB_CONNECTION")
-
+	fmt.Println("DbConnection", DbConnection)
 	if DbConnection == "mysql" {
 		Db = ConnectMySQLDB()
 	}

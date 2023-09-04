@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"go-boilerplate/cache"
+	"go-boilerplate/pkg/cache"
 	"golang.org/x/text/language"
 	"strings"
 )

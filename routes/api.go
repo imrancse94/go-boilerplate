@@ -2,8 +2,8 @@ package routes
 
 import (
 	"go-boilerplate/controllers"
-	"go-boilerplate/gate"
 	"go-boilerplate/middleware"
+	"go-boilerplate/pkg/gate"
 	"go-boilerplate/requests"
 )
 

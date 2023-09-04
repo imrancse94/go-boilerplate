@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"go-boilerplate/gate"
+	"go-boilerplate/pkg/gate"
 	"net/http"
 )
 

@@ -4,16 +4,25 @@ import (
 	"context"
 	"fmt"
 	"github.com/joho/godotenv"
-	"go-boilerplate/bootstrap"
-	"go-boilerplate/cache"
-	"go-boilerplate/database"
 	"go-boilerplate/models"
+	"go-boilerplate/pkg/bootstrap"
+	"go-boilerplate/pkg/cache"
+	"go-boilerplate/pkg/database"
 	"net/http"
 	"os"
+	"path/filepath"
+	"runtime"
+)
+
+var (
+	_, b, _, _ = runtime.Caller(0)
+
+	// Root folder of this project
+	Root = filepath.Join(filepath.Dir(b), "..")
 )
 
 func main() {
-	godotenv.Load()
+	godotenv.Load(string(Root) + `/.env`)
 	DB := database.InitDB()
 	models.Init(DB)
 	bootstrap.Init()

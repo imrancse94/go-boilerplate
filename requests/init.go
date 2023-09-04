@@ -7,8 +7,8 @@ import (
 	"errors"
 	"github.com/asaskevich/govalidator"
 	"go-boilerplate/constant"
-	"go-boilerplate/gate"
-	"go-boilerplate/response"
+	"go-boilerplate/pkg/gate"
+	response2 "go-boilerplate/pkg/response"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -67,7 +67,7 @@ func Validation(data interface{}) gate.Middleware {
 			if err != nil {
 				//http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 				//fmt.Fprint(w, err.(error).Error())
-				response.ErrorResponse(response.ErrorResponseStruct{
+				response2.ErrorResponse(response2.ErrorResponseStruct{
 					StatusCode: constant.Status("VALIDATION_ERROR"),
 					Message:    "Validation Error",
 					Error:      err,

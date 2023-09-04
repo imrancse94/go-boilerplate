@@ -3,10 +3,10 @@ package controllers
 import (
 	"go-boilerplate/Helper"
 	"go-boilerplate/constant"
-	"go-boilerplate/localize"
 	"go-boilerplate/models"
+	"go-boilerplate/pkg/localize"
+	"go-boilerplate/pkg/response"
 	"go-boilerplate/requests"
-	"go-boilerplate/response"
 	"net/http"
 )
 

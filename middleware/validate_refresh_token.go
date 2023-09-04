@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"go-boilerplate/Helper"
-	"go-boilerplate/gate"
 	"go-boilerplate/models"
+	"go-boilerplate/pkg/gate"
 	"go-boilerplate/requests"
 	Services "go-boilerplate/services"
 	"net/http"

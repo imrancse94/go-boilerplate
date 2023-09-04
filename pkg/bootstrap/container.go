@@ -2,8 +2,8 @@ package bootstrap
 
 import (
 	"github.com/gorilla/mux"
-	"go-boilerplate/gate"
 	"go-boilerplate/middleware"
+	"go-boilerplate/pkg/gate"
 	"go-boilerplate/requests"
 	"go-boilerplate/routes"
 	"net/http"
